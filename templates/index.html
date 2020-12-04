@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/style/style.css" />
+    <link rel="stylesheet" href="/static/style/bootstrap.min.css" />
+  </head>
+  <body>
+    <table class="table table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">번호</th>
+          <th scope="col">제품명</th>
+          <th scope="col">모델명</th>
+          <th scope="col">모델생성일</th>
+          <th scope="col">양품예시</th>
+          <th scope="col">불량품예시</th>
+          <th scope="col">다운로드</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for product in products %}
+        <tr>
+          <th>{{ loop.index }}</th>
+          <th>{{ product.info.productName }}</th>
+          <th>{{ product.info.modelName }}</th>
+          <td>{{ product.info.createdAt }}</td>
+          <td><img src="{{ product.represent_pos }}" height="200" /></td>
+          <td><img src="{{ product.represent_neg }}" height="200" /></td>
+          <td>
+            <a
+              href="{{ product.model_path }}"
+              download="{{product.info.modelName}}.onnx"
+            >
+              <button>모델 다운로드</button>
+            </a>
+            <a href="{{ product.info_path }}" download="info.json">
+              <button>정보 다운로드</button>
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>
