@@ -24,6 +24,7 @@
         {% for product in products %}
         <tr>
           <th>{{ loop.index }}</th>
+          {% if product.info != None %}
           <th>{{ product.info.productName }}</th>
           <th>{{ product.info.modelName }}</th>
           <td>{{ product.info.createdAt }}</td>
@@ -40,6 +41,12 @@
               <button>정보 다운로드</button>
             </a>
           </td>
+          {% else %}
+          <td colspan="3">Info Not Exists</td>
+          <td><img src="{{ product.represent_pos }}" height="200" /></td>
+          <td><img src="{{ product.represent_neg }}" height="200" /></td>
+          <td colspan="2">Model Not Exists</td>
+          {% endif %}
         </tr>
         {% endfor %}
       </tbody>

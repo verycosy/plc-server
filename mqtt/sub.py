@@ -31,10 +31,10 @@ def on_message(client, userdata, msg):
 
     product_name = product_info[2]
     neg_or_pos = product_info[3]
-    # TODO: neg case by case
+    
     current_date = datetime.datetime.now()
 
-    folder_path = os.path.join("..", "static", "data", product_name, neg_or_pos)
+    folder_path = os.path.join("..", "static", "data", product_name, "test", neg_or_pos)
     pathlib.Path(folder_path).mkdir(parents=True, exist_ok=True)
 
     print(f'Save image to {folder_path}')
