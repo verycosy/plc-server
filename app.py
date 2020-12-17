@@ -12,7 +12,10 @@ def index():
 
     products = list()
     for directory in data_directories:
-        products.append(Product(os.path.join(DATA_DIRECTORY, directory)))
+        product_path = os.path.join(DATA_DIRECTORY, directory)
+        
+        if os.path.isdir(product_path):
+            products.append(Product(product_path))
     
     return render_template('index.html',
                 products=products)
