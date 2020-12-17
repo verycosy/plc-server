@@ -21,7 +21,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for product in products %}
+        {% if products|length > 1 %} {% for product in products %}
         <tr>
           <th>{{ product.info.id }}</th>
           <th>{{ product.info.productName }}</th>
@@ -41,7 +41,11 @@
             </a>
           </td>
         </tr>
-        {% endfor %}
+        {% endfor %} {% else %}
+        <tr>
+          <td colspan="7">모델데이터가 존재하지 않습니다.</td>
+        </tr>
+        {% endif %}
       </tbody>
     </table>
   </body>

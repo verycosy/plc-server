@@ -1,2 +1,1 @@
-> python3 -m venv 'plc-server'
-> pip3 install -r requiurements.txt
+> pip3 install flask paho-mqtt
