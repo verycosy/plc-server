@@ -21,7 +21,7 @@
         </tr>
       </thead>
       <tbody>
-        {% if products|length > 1 %} {% for product in products %}
+        {% if products|length > 0 %} {% for product in products %}
         <tr>
           <th>{{ product.info.id }}</th>
           <th>{{ product.info.productName }}</th>
