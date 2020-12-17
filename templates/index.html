@@ -23,7 +23,6 @@
       <tbody>
         {% for product in products %}
         <tr>
-          {% if product.info != None %}
           <th>{{ product.info.id }}</th>
           <th>{{ product.info.productName }}</th>
           <th>{{ product.info.modelName }}</th>
@@ -41,12 +40,6 @@
               <button>정보 다운로드</button>
             </a>
           </td>
-          {% else %}
-          <td colspan="3">Info Not Exists</td>
-          <td><img src="{{ product.represent_pos_image }}" height="200" /></td>
-          <td><img src="{{ product.represent_neg_image }}" height="200" /></td>
-          <td colspan="2">Model Not Exists</td>
-          {% endif %}
         </tr>
         {% endfor %}
       </tbody>

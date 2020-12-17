@@ -15,7 +15,10 @@ def index():
         product_path = os.path.join(DATA_DIRECTORY, directory)
         
         if os.path.isdir(product_path):
-            products.append(Product(product_path))
+            product = Product(product_path)
+
+            if product.info != None:
+                products.append(product)
     
     return render_template('index.html',
                 products=products)
