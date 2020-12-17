@@ -28,5 +28,8 @@ class Product:
 
 
     def _make_image_path(self, is_negative):
-        path = os.path.join(self.folder_path, TEST_FOLDER_NAME, NEGATIVE_FOLDER_NAME if is_negative else POSITIVE_FOLDER_NAME)
-        return os.path.join(path, os.listdir(path)[0])
+        try:
+            path = os.path.join(self.folder_path, TEST_FOLDER_NAME, NEGATIVE_FOLDER_NAME if is_negative else POSITIVE_FOLDER_NAME)
+            return os.path.join(path, os.listdir(path)[0])
+        except FileNotFoundError:
+            return None
