@@ -34,7 +34,7 @@ def on_message(client, userdata, msg):
     neg_or_pos = product_info[3]
     received_date = product_info[4]
 
-    folder_path = os.path.join("..", "static", "data", product_name, TEST_FOLDER_NAME, neg_or_pos)
+    folder_path = os.path.join("static", "data", product_name, TEST_FOLDER_NAME, neg_or_pos)
     pathlib.Path(folder_path).mkdir(parents=True, exist_ok=True)
 
     print(f'Save image to {folder_path}/{received_date}')
@@ -43,15 +43,19 @@ def on_message(client, userdata, msg):
     f.close()
 
 
+client = mqtt.Client(client_id=MQTT_CLIENT_ID, clean_session=False)
+
+client.on_connect = on_connect
+client.on_disconnect = on_disconnect
+client.on_subscribe = on_subscribe
+client.on_message = on_message
+
+client.connect(MQTT_HOST, MQTT_PORT)
+
+client.subscribe(f'{TOPIC_PREFIX}/#', QOS_LEVEL)
+
+def init_mqtt_sub():
+    client.loop_start()
+
 if __name__ == "__main__":
-    client = mqtt.Client(client_id=MQTT_CLIENT_ID, clean_session=False)
-
-    client.on_connect = on_connect
-    client.on_disconnect = on_disconnect
-    client.on_subscribe = on_subscribe
-    client.on_message = on_message
-
-    client.connect(MQTT_HOST, MQTT_PORT)
-
-    client.subscribe(f'{TOPIC_PREFIX}/#', QOS_LEVEL)
     client.loop_forever()

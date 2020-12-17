@@ -1,9 +1,11 @@
 from flask import Flask, render_template
 from lib.product import Product
+from mqtt.sub import init_mqtt_sub
 import os
 
-DATA_DIRECTORY = os.path.join("static", "data")
+init_mqtt_sub()
 
+DATA_DIRECTORY = os.path.join("static", "data")
 app = Flask(__name__)
 
 @app.route('/')
