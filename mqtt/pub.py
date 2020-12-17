@@ -9,7 +9,7 @@ QOS_LEVEL = 1
 
 TOPIC_PREFIX = 'plc/product'
 
-PRODUCT_NAME = "red-cable"
+PRODUCT_NAME = "brown-cable-p01"
 IS_GOOD_PRODUCT = True
 
 POSITIVE_FOLDER_NAME = "pos"
