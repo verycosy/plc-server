@@ -11,6 +11,8 @@ QOS_LEVEL = 1
 
 TOPIC_PREFIX = 'plc/product'
 
+TEST_FOLDER_NAME = "test"
+
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
         print("Client connected")
@@ -34,7 +36,7 @@ def on_message(client, userdata, msg):
     
     current_date = datetime.datetime.now()
 
-    folder_path = os.path.join("..", "static", "data", product_name, "test", neg_or_pos)
+    folder_path = os.path.join("..", "static", "data", product_name, TEST_FOLDER_NAME, neg_or_pos)
     pathlib.Path(folder_path).mkdir(parents=True, exist_ok=True)
 
     print(f'Save image to {folder_path}')
