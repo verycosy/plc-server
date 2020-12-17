@@ -1,5 +1,4 @@
 import paho.mqtt.client as mqtt
-import datetime
 import os
 import pathlib
 
@@ -33,26 +32,26 @@ def on_message(client, userdata, msg):
 
     product_name = product_info[2]
     neg_or_pos = product_info[3]
-    
-    current_date = datetime.datetime.now()
+    received_date = product_info[4]
 
     folder_path = os.path.join("..", "static", "data", product_name, TEST_FOLDER_NAME, neg_or_pos)
     pathlib.Path(folder_path).mkdir(parents=True, exist_ok=True)
 
-    print(f'Save image to {folder_path}')
-    f = open(f'{folder_path}/{current_date}.jpeg', 'wb')
+    print(f'Save image to {folder_path}/{received_date}')
+    f = open(f'{folder_path}/{received_date}.jpeg', 'wb')
     f.write(msg.payload)
     f.close()
 
 
-client = mqtt.Client(client_id=MQTT_CLIENT_ID, clean_session=False)
+if __name__ == "__main__":
+    client = mqtt.Client(client_id=MQTT_CLIENT_ID, clean_session=False)
 
-client.on_connect = on_connect
-client.on_disconnect = on_disconnect
-client.on_subscribe = on_subscribe
-client.on_message = on_message
+    client.on_connect = on_connect
+    client.on_disconnect = on_disconnect
+    client.on_subscribe = on_subscribe
+    client.on_message = on_message
 
-client.connect(MQTT_HOST, MQTT_PORT)
+    client.connect(MQTT_HOST, MQTT_PORT)
 
-client.subscribe(f'{TOPIC_PREFIX}/#', QOS_LEVEL)
-client.loop_forever()
+    client.subscribe(f'{TOPIC_PREFIX}/#', QOS_LEVEL)
+    client.loop_forever()

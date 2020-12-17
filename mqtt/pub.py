@@ -1,5 +1,6 @@
 import paho.mqtt.client as mqtt
 import time
+import datetime
 
 MQTT_CLIENT_ID = "publisher"
 
@@ -31,27 +32,29 @@ def on_publish(client, userdata, mid):
 
 
 def generate_topic_name(product_name, is_good_product):
-    return f'{TOPIC_PREFIX}/{product_name}/{POSITIVE_FOLDER_NAME if is_good_product else NEGATIVE_FOLDER_NAME}'
+    current_date = datetime.datetime.now()
+
+    return f'{TOPIC_PREFIX}/{product_name}/{POSITIVE_FOLDER_NAME if is_good_product else NEGATIVE_FOLDER_NAME}/{current_date}'
 
 
-client = mqtt.Client(client_id=MQTT_CLIENT_ID, clean_session=False)
+if __name__ == "__main__":
+    client = mqtt.Client(client_id=MQTT_CLIENT_ID, clean_session=False)
 
-client.on_connect = on_connect
-client.on_disconnect = on_disconnect
-client.on_publish = on_publish
+    client.on_connect = on_connect
+    client.on_disconnect = on_disconnect
+    client.on_publish = on_publish
 
-client.connect(MQTT_HOST, MQTT_PORT)
-client.loop_start()
+    client.connect(MQTT_HOST, MQTT_PORT)
+    client.loop_start()
 
-topic_name = generate_topic_name(product_name=PRODUCT_NAME, is_good_product=IS_GOOD_PRODUCT)
+    while True:
+        topic_name = generate_topic_name(product_name=PRODUCT_NAME, is_good_product=IS_GOOD_PRODUCT)
+        f = open("sample.jpeg", "rb")
+        img = f.read()
+        byte_arr = bytearray(img)
 
-while True:
-    f = open("sample.jpeg", "rb")
-    img = f.read()
-    byte_arr = bytearray(img)
+        client.publish(topic_name, byte_arr, QOS_LEVEL)
+        time.sleep(1)
 
-    client.publish(topic_name, byte_arr, QOS_LEVEL)
-    time.sleep(1)
-
-client.loop_stop()
-client.disconnect()
+    client.loop_stop()
+    client.disconnect()
